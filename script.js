@@ -1,3 +1,5 @@
+//refactored some repitive codes into functions
+
 "use strict";
 let numberThatWillBeRandomised = Math.trunc(Math.random() * 20) + 1;
 let ChancesLeft = 20;
@@ -11,10 +13,13 @@ document.querySelector(".again").addEventListener("click", function () {
   document.querySelector("body").style.backgroundColor = "#222";
   document.querySelector(".score").textContent = ChancesLeft;
   document.querySelector(".guess").value = "";
-  document.querySelector(".message").textContent = "Start guessing...";
+  messagesInfo("Start guessing...");
 });
 function clearInputBox() {
   document.querySelector(".guess").value = "";
+}
+function messagesInfo(message) {
+  document.querySelector(".message").textContent = message;
 }
 document.querySelector(".score").textContent = ChancesLeft;
 console.log(numberThatWillBeRandomised);
@@ -22,7 +27,7 @@ console.log(numberThatWillBeRandomised);
 document.querySelector(".check").addEventListener("click", function () {
   let guess = Number(document.querySelector(".guess").value);
   function whenCorrect() {
-    document.querySelector(".message").textContent = "Correct Value";
+    messagesInfo("Correct Value");
     document.querySelector("body").style.backgroundColor = "#60b347";
     document.querySelector(".number").style.width = "30rem";
     document.querySelector(".number").textContent = guess;
@@ -31,7 +36,7 @@ document.querySelector(".check").addEventListener("click", function () {
   // When there is no input
   console.log(numberThatWillBeRandomised);
   if (!guess) {
-    document.querySelector(".message").textContent = " No number!";
+    messagesInfo(" No number!");
   } else if (guess === numberThatWillBeRandomised) {
     whenCorrect();
     highscore = ChancesLeft;
@@ -45,15 +50,16 @@ document.querySelector(".check").addEventListener("click", function () {
   }
   //rate this
   else if (ChancesLeft === 0) {
-    document.querySelector(".message").textContent = "You lost the game.";
+    messagesInfo("You lost the game.");
     document.querySelector("body").style.backgroundColor = "#ff0000";
   } else {
     ChancesLeft--;
-    document.querySelector(".score").textContent = ChancesLeft;
-    guess < numberThatWillBeRandomised
-      ? (document.querySelector(".message").textContent =
-          "Value entered is less than guessed value")
-      : (document.querySelector(".message").textContent =
-          "Value entered is more than guessed value");
+
+    messagesInfo(
+      guess < numberThatWillBeRandomised
+        ? "Value entered is less than guessed value"
+        : "Value entered is more than guessed value"
+    );
   }
 });
+
